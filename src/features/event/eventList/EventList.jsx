@@ -3,9 +3,8 @@ import EventListItem from "./EventListItem";
 class EventList extends Component {
   state = {};
   render() {
-    const { events, onEventEdit } = this.props;
+    const { events, onEventOpen, deleteEvent } = this.props;
     console.log(events);
-    console.log(onEventEdit === undefined);
 
     console.log(" EventList ");
     return (
@@ -14,7 +13,8 @@ class EventList extends Component {
           <EventListItem
             key={event.id}
             event={event}
-            onEventEdit={onEventEdit}
+            onEventOpen={onEventOpen}
+            deleteEvent={deleteEvent}
           />
         ))}
       </div>

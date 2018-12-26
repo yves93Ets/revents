@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import EventDashboard from "../../features/event/eventDashbord/EventDashboard";
 import NavBar from "../../features/nav/navBar/NavBar";
@@ -10,15 +10,18 @@ import EventDetailedPage from "../../features/event/eventDetails/EventDetailedPa
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
 import HomePage from "../../features/home/HomePage";
 import TestComponent from "../../features/testarea/TestComponent";
+import ModalManager from "../../features/modals/ModalManager";
 
 class App extends Component {
   render() {
     return (
       <div>
+        <ModalManager />
         <Switch>
           <Route exact path="/" component={HomePage} />
         </Switch>
-        <Route path="/(.+)"
+        <Route
+          path="/(.+)"
           render={() => (
             <div>
               <NavBar />
@@ -35,8 +38,8 @@ class App extends Component {
                 </Switch>
               </Container>
             </div>
-          )
-          } />
+          )}
+        />
       </div>
     );
   }

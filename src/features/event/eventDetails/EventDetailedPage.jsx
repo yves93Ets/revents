@@ -5,6 +5,7 @@ import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
 import { connect } from "react-redux";
+
 const mapStsate = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
   let event = {};

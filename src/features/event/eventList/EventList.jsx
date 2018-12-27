@@ -9,14 +9,15 @@ class EventList extends Component {
     console.log(" EventList ");
     return (
       <div>
-        {events.map(event => (
-          <EventListItem
-            key={event.id}
-            event={event}
-            onEventOpen={onEventOpen}
-            deleteEvent={deleteEvent}
-          />
-        ))}
+        {events &&
+          events.map(event => (
+            <EventListItem
+              key={event.id}
+              event={event}
+              onEventOpen={onEventOpen}
+              deleteEvent={deleteEvent}
+            />
+          ))}
       </div>
     );
   }

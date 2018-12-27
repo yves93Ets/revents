@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+import { Route, Switch } from "react-router-dom";
 import EventDashboard from "../../features/event/eventDashbord/EventDashboard";
 import NavBar from "../../features/nav/navBar/NavBar";
-import EventForm from "../../features/event/eventForm/EventForm";
-import SettingsDashboard from "../../features/user/settings/SettingsDashboard";
-import UserDetailedPage from "../../features/user/UserDetailed/UserDetailedPage";
+import HomePage from "../../features/home/HomePage";
 import EventDetailedPage from "../../features/event/eventDetails/EventDetailedPage";
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
-import HomePage from "../../features/home/HomePage";
+import UserDetailedPage from "../../features/user/UserDetailed/UserDetailedPage";
+import SettingsDashboard from "../../features/user/settings/SettingsDashboard";
+import EventForm from "../../features/event/eventForm/EventForm";
 import TestComponent from "../../features/testarea/TestComponent";
 import ModalManager from "../../features/modals/ModalManager";
-
+//import { UserIsAuthenticated } from '../../features/auth/authWrapper';
+//import NotFound from '../../app/layout/NotFound'
+const NotFound = null;
 class App extends Component {
   render() {
     return (
@@ -20,6 +22,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
         </Switch>
+
         <Route
           path="/(.+)"
           render={() => (
@@ -35,6 +38,8 @@ class App extends Component {
                   <Route path="/profile/:id" component={UserDetailedPage} />
                   <Route path="/settings" component={SettingsDashboard} />
                   <Route path="/createEvent" component={EventForm} />
+                  <Route path="/error" component={NotFound} />
+                  <Route component={NotFound} />
                 </Switch>
               </Container>
             </div>

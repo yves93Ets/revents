@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import Dropzone from "react-dropzone";
-import Cropper from "react-cropper";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { toastr } from "react-redux-toastr";
-import { firestoreConnect } from "react-redux-firebase";
-import { uploadProfileImage } from "../userActions";
-import "cropperjs/dist/cropper.css";
 import {
   Image,
   Segment,
@@ -17,25 +9,39 @@ import {
   Card,
   Icon
 } from "semantic-ui-react";
+import { toastr } from "react-redux-toastr";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import Dropzone from "react-dropzone";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import { uploadProfileImage, deletePhoto, setMainPhoto } from "../userActions";
+
 const query = ({ auth }) => {
   return [
     {
       collection: "users",
       doc: auth.uid,
-      subCollections: [{ collection: "photos" }],
+      subcollections: [{ collection: "photos" }],
       storeAs: "photos"
     }
   ];
 };
+
 const actions = {
-  uploadProfileImage
+  uploadProfileImage,
+  deletePhoto,
+  setMainPhoto
 };
-const mapstate = state => ({
+
+const mapState = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
   photos: state.firestore.ordered.photos,
   loading: state.async.loading
 });
+
 class PhotosPage extends Component {
   state = {
     files: [],
@@ -43,12 +49,7 @@ class PhotosPage extends Component {
     cropResult: null,
     image: {}
   };
-  cancelCrop = () => {
-    this.setState({
-      files: [],
-      image: {}
-    });
-  };
+
   uploadImage = async () => {
     try {
       await this.props.uploadProfileImage(
@@ -61,6 +62,7 @@ class PhotosPage extends Component {
       toastr.error("Oops", error.message);
     }
   };
+
   handlePhotoDelete = photo => async () => {
     try {
       this.props.deletePhoto(photo);
@@ -76,16 +78,17 @@ class PhotosPage extends Component {
       toastr.error("Oops", error.message);
     }
   };
-  onDrop = files => {
+
+  cancelCrop = () => {
     this.setState({
-      files,
-      fileName: files[0].name
+      files: [],
+      image: {}
     });
   };
+
   cropImage = () => {
-    if (typeof this.refs.cropper.getCroppedCanvas() === "undefined") {
-      return;
-    }
+    if (typeof this.refs.cropper.getCroppedCanvas() === "undefined") return;
+
     this.refs.cropper.getCroppedCanvas().toBlob(blob => {
       let imageUrl = URL.createObjectURL(blob);
       this.setState({
@@ -94,6 +97,14 @@ class PhotosPage extends Component {
       });
     }, "image/jpeg");
   };
+
+  onDrop = files => {
+    this.setState({
+      files,
+      fileName: files[0].name
+    });
+  };
+
   render() {
     const { photos, profile, loading } = this.props;
     let filteredPhotos;
@@ -146,11 +157,11 @@ class PhotosPage extends Component {
                 />
                 <Button.Group>
                   <Button
-                    loading={loading}
                     onClick={this.uploadImage}
                     style={{ width: "100px" }}
                     positive
                     icon="check"
+                    loading={loading}
                   />
                   <Button
                     disabled={loading}
@@ -172,14 +183,12 @@ class PhotosPage extends Component {
             <Image src={profile.photoURL || "/assets/user.png"} />
             <Button positive>Main Photo</Button>
           </Card>
-
           {photos &&
             filteredPhotos.map(photo => (
               <Card key={photo.id}>
                 <Image src={photo.url} />
                 <div className="ui two buttons">
                   <Button
-                    loading={loading}
                     onClick={this.handleSetMainPhoto(photo)}
                     basic
                     color="green"
@@ -203,7 +212,7 @@ class PhotosPage extends Component {
 
 export default compose(
   connect(
-    mapstate,
+    mapState,
     actions
   ),
   firestoreConnect(auth => query(auth))

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Menu, Button, Container } from "semantic-ui-react";
 import { NavLink, Link, withRouter } from "react-router-dom";
-import SignedOutMenu from "../navBar/Menus/SignedOutMenu";
-import SignedInMenu from "../navBar/Menus/SignedInMenu";
+import SignedOutMenu from "../NavBar/Menus/SignedOutMenu";
+import SignedInMenu from "../NavBar/Menus/SignedInMenu";
 import { connect } from "react-redux";
 import { withFirebase } from "react-redux-firebase";
 import { openModal } from "../../modals/modalActions";

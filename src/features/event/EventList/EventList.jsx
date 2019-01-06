@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import EventListItem from "./EventListItem";
-class EventList extends Component {
-  state = {};
-  render() {
-    const { events, onEventOpen, deleteEvent } = this.props;
-    console.log(events);
+import InfiniteScroll from "react-infinite-scroller";
 
-    console.log(" EventList ");
+class EventList extends Component {
+  render() {
+    const { events, getNextEvents, loading, moreEvents } = this.props;
     return (
       <div>
-        {events &&
-          events.map(event => (
-            <EventListItem
-              key={event.id}
-              event={event}
-              onEventOpen={onEventOpen}
-              deleteEvent={deleteEvent}
-            />
-          ))}
+        {events && events.length !== 0 && (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={getNextEvents}
+            hasMore={!loading && moreEvents}
+            initialLoad={false}
+          >
+            {events &&
+              events.map(event => (
+                <EventListItem key={event.id} event={event} />
+              ))}
+          </InfiniteScroll>
+        )}
       </div>
     );
   }

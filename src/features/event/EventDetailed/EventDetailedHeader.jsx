@@ -1,8 +1,7 @@
 import React from "react";
-import format from "date-fns/format";
 import { Segment, Image, Item, Header, Button } from "semantic-ui-react";
+import format from "date-fns/format";
 import { Link } from "react-router-dom";
-import { cancelGoingToEvent } from "../../user/userActions";
 
 const eventImageStyle = {
   filter: "brightness(30%)"
@@ -16,6 +15,7 @@ const eventImageTextStyle = {
   height: "auto",
   color: "white"
 };
+
 const EventDetailedHeader = ({
   event,
   isHost,
@@ -23,10 +23,6 @@ const EventDetailedHeader = ({
   goingToEvent,
   cancelGoingToEvent
 }) => {
-  let eventDate;
-  if (event.date) {
-    eventDate = event.date.toDate();
-  }
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
@@ -45,7 +41,7 @@ const EventDetailedHeader = ({
                   content={event.title}
                   style={{ color: "white" }}
                 />
-                <p>{format(eventDate, "dddd Do MMMM")}</p>
+                <p>{format(event.date, "dddd Do MMMM")}</p>
                 <p>
                   Hosted by <strong>{event.hostedBy}</strong>
                 </p>
@@ -70,7 +66,7 @@ const EventDetailedHeader = ({
           </div>
         )}
         {isHost && (
-          <Button as={Link} to={`manage/${event.id}`} color="orange">
+          <Button as={Link} to={`/manage/${event.id}`} color="orange">
             Manage Event
           </Button>
         )}
@@ -78,4 +74,5 @@ const EventDetailedHeader = ({
     </Segment.Group>
   );
 };
+
 export default EventDetailedHeader;

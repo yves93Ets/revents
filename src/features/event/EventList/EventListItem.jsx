@@ -8,6 +8,10 @@ import { objectToArray } from "../../../app/common/util/helpers";
 class EventListItem extends Component {
   render() {
     const { event } = this.props;
+    let eventDate;
+    if (event.date) {
+      eventDate = event.date.toDate();
+    }
     return (
       <Segment.Group>
         <Segment>
@@ -36,8 +40,8 @@ class EventListItem extends Component {
         </Segment>
         <Segment>
           <span>
-            <Icon name="clock" /> {format(event.date, "dddd Do MMMM")} at{" "}
-            {format(event.date, "HH:mm")} |
+            <Icon name="clock" /> {format(eventDate, "dddd Do MMMM")} at{" "}
+            {format(eventDate, "HH:mm")} |
             <Icon name="marker" /> {event.venue}
           </span>
         </Segment>

@@ -1,11 +1,10 @@
 import { toastr } from "react-redux-toastr";
-import { DELETE_EVENT, FETCH_EVENTS } from "./eventConstants";
+import { FETCH_EVENTS } from "./eventConstants";
 import {
   asyncActionError,
   asyncActionFinish,
   asyncActionStart
 } from "../async/asyncActions";
-import { fetchSampleData } from "../../app/data/mockApi";
 import { createNewEvent } from "../../app/common/util/helpers";
 import moment from "moment";
 import firebase from "../../app/config/firebase";
@@ -127,7 +126,7 @@ export const addEventComment = (eventId, values, parentId) => async (
   let newComment = {
     parentId: parentId,
     displayName: profile.displayName,
-    photoURL: profile.photoURL,
+    //photoURL: profile.photoURL,
     uid: user.uid,
     text: values.comment,
     date: Date.now()
